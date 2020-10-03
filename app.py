@@ -25,10 +25,10 @@ def main():
 @st.cache(show_spinner=False)
 def load_data():
     with st.spinner("Carregando dataset"):
-    # mensagem aqui para mostrar que os dados estão sendo carregados era bom...
-    url = 'https://bitbucket.org/SamuelHericlesBit/datasets/raw/f54dca5ffc162c58d66ff75c2df601e4f31c061c/acidentes2019_todas_causas_tipos.csv'
-    df = pd.read_csv(url, sep = ';', encoding = 'latin-1')
-    return df
+        # mensagem aqui para mostrar que os dados estão sendo carregados era bom...
+        url = 'https://bitbucket.org/SamuelHericlesBit/datasets/raw/f54dca5ffc162c58d66ff75c2df601e4f31c061c/acidentes2019_todas_causas_tipos.csv'
+        df = pd.read_csv(url, sep = ';', encoding = 'latin-1')
+        return df
 
 df = load_data()
 
@@ -38,9 +38,13 @@ def explorantion_page():
 def modelagem_page():
     st.markdown('## Modelagem dos dados')
     st.markdown('### Regressão Linear')
+    
     idade = st.sidebar.slider('Escolha a idade do condutor', 18, 100)
-    municipios = st.sidebar.selectbox('Escolha um municipio', df['municipio'].unique())
     fase_dia = st.sidebar.selectbox('Escolha uma fase do dia', df['fase_dia'].unique())
+    
+    estado = st.sidebar.selectbox('Escolha um estado', df['uf'].unique())
+    municipios = st.sidebar.selectbox('Escolha um municipio', df.query('uf == "%s"' % estado)['municipio'].unique())
+    
     cond_meteorologica = st.sidebar.selectbox('Escolha uma fase do dia', df['condicao_metereologica'].unique())
     dia_semana = st.sidebar.selectbox('Escolha uma fase do dia', df['dia_semana'].unique())
 
