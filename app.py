@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import altair as alt
 import os, urllib
+from sklearn.linear_model import LinearRegression
+from sklearn.datasets import make_regression
+import matplotlib.pyplot as plt
 
 def main():
     # Render the readme as markdown using st.markdown.
@@ -19,8 +22,9 @@ def main():
     elif app_mode == "Modelagem":
         modelagem_page()
 
-@st.cache
+@st.cache(show_spinner=False)
 def load_data():
+    with st.spinner("Carregando dataset"):
     # mensagem aqui para mostrar que os dados estão sendo carregados era bom...
     url = 'https://bitbucket.org/SamuelHericlesBit/datasets/raw/f54dca5ffc162c58d66ff75c2df601e4f31c061c/acidentes2019_todas_causas_tipos.csv'
     df = pd.read_csv(url, sep = ';', encoding = 'latin-1')
@@ -36,6 +40,10 @@ def modelagem_page():
     st.markdown('### Regressão Linear')
     idade = st.sidebar.slider('Escolha a idade do condutor', 18, 100)
     municipios = st.sidebar.selectbox('Escolha um municipio', df['municipio'].unique())
+    fase_dia = st.sidebar.selectbox('Escolha uma fase do dia', df['fase_dia'].unique())
+    cond_meteorologica = st.sidebar.selectbox('Escolha uma fase do dia', df['condicao_metereologica'].unique())
+    dia_semana = st.sidebar.selectbox('Escolha uma fase do dia', df['dia_semana'].unique())
+
 
 if __name__ == "__main__":
     main()
