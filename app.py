@@ -47,7 +47,8 @@ def modelagem_page():
     
     cond_meteorologica = st.sidebar.selectbox('Escolha uma fase do dia', df['condicao_metereologica'].unique())
     dia_semana = st.sidebar.selectbox('Escolha uma fase do dia', df['dia_semana'].unique())
-
+    
+    st.markdown('## Modelagem dos dados')
 
 if __name__ == "__main__":
     main()
