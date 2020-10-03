@@ -69,5 +69,3 @@
         print("Perigo abaixo da média")
     else:
         print("Perigo médio")
-
-    st.markdown('## Modelagem dos dados')
