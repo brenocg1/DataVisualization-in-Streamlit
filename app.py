@@ -1,3 +1,7 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+
 # Streamlit encourages well-structured code, like starting execution in a main() function.
 def main():
     # Render the readme as markdown using st.markdown.
@@ -13,8 +17,15 @@ def main():
         st.sidebar.success('To continue select "Run the app".')
         st.code(get_file_content_as_string("app.py"))
     elif app_mode == "Modelagem":
-        readme_text.empty()
         run_the_app()
+
+@st.cache(show_spinner=False)
+def get_file_content_as_string(path):
+    url = 'https://bitbucket.org/SamuelHericlesBit/datasets/raw/f54dca5ffc162c58d66ff75c2df601e4f31c061c/acidentes2019_todas_causas_tipos.csv'
+    response = urllib.request.urlopen(url)
+    return response.read().decode("utf-8")
+
+
 
 if __name__ == "__main__":
     main()
