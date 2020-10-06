@@ -8,12 +8,6 @@ from sklearn.datasets import make_regression
 import matplotlib.pyplot as plt
 
 def main():
-    # Render the readme as markdown using st.markdown.
-    # readme_text = st.markdown(get_file_content_as_string("instructions.md"))
-
-    # Lembrar de colocar aqui logo o load do dataframe
-
-    # Once we have the dependencies, add a selector for the app mode on the sidebar.
     st.sidebar.title("Selecione a pagina")
     app_mode = st.sidebar.selectbox("Navegaçao",
         ["Exploracao de dados", "Modelagem"])
@@ -35,6 +29,10 @@ df = load_data()
 def explorantion_page():
     st.markdown('## Exploracao dos dados')
 
+
+
+
+inputs = []
 def modelagem_page():
     st.markdown('## Modelagem dos dados')
     st.markdown('### Regressão Linear')
@@ -43,12 +41,12 @@ def modelagem_page():
     fase_dia = st.sidebar.selectbox('Escolha uma fase do dia', df['fase_dia'].unique())
     
     estado = st.sidebar.selectbox('Escolha um estado', df['uf'].unique())
-    municipios = st.sidebar.selectbox('Escolha um municipio', df.query('uf == "%s"' % estado)['municipio'].unique())
+    municipio = st.sidebar.selectbox('Escolha um municipio', df.query('uf == "%s"' % estado)['municipio'].unique())
     
     cond_meteorologica = st.sidebar.selectbox('Escolha uma fase do dia', df['condicao_metereologica'].unique())
     dia_semana = st.sidebar.selectbox('Escolha uma fase do dia', df['dia_semana'].unique())
     
-    st.markdown('## Modelagem dos dados')
+    inputs = [idade, fase_dia, estado, municipio, cond_meteorologica, dia_semana]
 
 if __name__ == "__main__":
     main()
