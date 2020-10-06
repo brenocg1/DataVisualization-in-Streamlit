@@ -1,5 +1,9 @@
-    print(df)
-   
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.datasets import make_regression
+import matplotlib.pyplot as plt
+
+def regression_function(df, inputData):  
     df_aux = df.copy()
 
     df_aux.dia_semana.replace(
@@ -22,37 +26,14 @@
 
     model = LinearRegression()
     model.fit(X, y)
-    Xnew = []
-    for i in range(165832):
-        Xnew.append([np.random.choice(df_aux['br'].unique()),
-                    np.random.choice(df_aux['idade'].unique()),
-                    np.random.choice(df_aux['fase_dia'].unique()),
-                    np.random.choice(df_aux['condicao_metereologica'].unique()),
-                    np.random.choice(df_aux['municipio'].unique()),
-                    np.random.choice(df_aux['dia_semana'].unique())])
-    Xnew
+    
+    Xnew = [inputData]
 
     ynew = model.predict(Xnew)
 
-    plt.figure(figsize=(20,10))
-    plt.plot(ynew,'*-')
+    media_pesos = 0.10963494565279992
 
-    #'feridos_leves','feridos_graves','mortos'
-    medias = np.mean(ynew,axis=0)
-    print(medias)
-    media_pesos = (medias[0] + medias[1]*2.5 + medias[2]*6.5)/10
-    print(media_pesos)
-    # Tratar isso com uma média geral
-    # Os pesos dão mais importância aos casos mais raros
-    tabela_perigos = []
-    for i in range(ynew.shape[0]):
-        caso = ynew[i]
-        caso_pesos = (caso[0] + caso[1]*2.5 + caso[2]*6.5)/10
-        tabela_perigos.append(caso_pesos - media_pesos)
-    tabela_perigos = pd.DataFrame(tabela_perigos)
-    print(f'Máximo valor de perigo encontrado: {tabela_perigos.max()}')
-    print(f'Mínimo valor de perigo encontrado: {tabela_perigos.min()}')
-    caso = ynew[101] # Exemplo
+    caso = ynew[0] # Exemplo
     caso_pesos = (caso[0] + caso[1]*2.5 + caso[2]*6.5)/10
     perigo_do_caso = caso_pesos - media_pesos
     print(f'Media de perigo: {media_pesos}')
@@ -60,12 +41,14 @@
     print(f'Perigo do caso: {perigo_do_caso}')
 
     if perigo_do_caso >= 0.035:
-        print("Perigo muito elevado!")
+        predict = "Perigo muito elevado!"
     elif perigo_do_caso >= 0.01:
-        print("Perigo acima da média")
+        predict = "Perigo acima da média"
     elif perigo_do_caso <= -0.035:
-        print("Perigo baixo")
+        predict = "Perigo baixo"
     elif perigo_do_caso <= -0.01:
-        print("Perigo abaixo da média")
+        predict = "Perigo abaixo da média"
     else:
-        print("Perigo médio")
+        predict = "Perigo médio"
+    
+    return predict
