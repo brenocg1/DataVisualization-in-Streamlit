@@ -50,7 +50,7 @@ def freq(x: pd.Series, plot=False):
 
 # Exploracao
 def explorantion_page():
-    st.markdown('## Exploracao dos dados')
+    st.markdown('## Exploração dos dados')
     
     st.markdown("### Ranking de mortos por município")
     table_temp = df.groupby("municipio")["mortos"].sum().sort_values(ascending=False).head(10)
