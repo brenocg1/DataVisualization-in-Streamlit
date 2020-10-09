@@ -13,7 +13,7 @@ from bokeh.plotting import figure
 
 def main():
     st.sidebar.title("Selecione a página")
-    app_mode = st.sidebar.selectbox("Navegação",
+    app_mode = st.sidebar.selectbox("",
         ["Exploração de dados", "Modelagem"])
     if app_mode == "Exploração de dados":
         explorantion_page()
@@ -154,10 +154,10 @@ def modelagem_page():
 
 
 
-    cond_meteorologica = st.sidebar.selectbox('Escolha uma fase do dia', df['condicao_metereologica'].unique())
+    cond_meteorologica = st.sidebar.selectbox('Escolha uma condição meteorológica', df['condicao_metereologica'].unique())
     cond_meteorologica = list(df['condicao_metereologica'].unique()).index(cond_meteorologica) + 1
     
-    dia_semana = st.sidebar.selectbox('Escolha uma fase do dia', df['dia_semana'].unique())
+    dia_semana = st.sidebar.selectbox('Escolha um dia da semana', df['dia_semana'].unique())
     dia_semana = list(df['dia_semana'].unique()).index(dia_semana) + 1
 
     inputs = [br, idade, fase_dia, cond_meteorologica, municipio, dia_semana] 
